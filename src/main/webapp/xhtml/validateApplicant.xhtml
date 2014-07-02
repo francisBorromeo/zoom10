@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../resources/templates/memberlayout.xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:aui="http://liferay.com/faces/aui">
+
+    <ui:define name="top">
+        <h1>
+			Validate Applicant
+		</h1>
+    </ui:define>
+
+    <ui:define name="content">
+        <f:view>
+			<h:form id="validApplicantForm">
+				<f:event type="preRenderView" listener="#{memberBean.init}"/>
+				<p:dataTable id="applicantList"
+							 value="#{memberBean.applicantModel}"
+							 var="item"
+							 selection="#{memberBean.selectedApplicant}"
+							 rowKey="#{item.applicantNo}"
+                             sortFunction="single"
+                             scrollRows="20"
+                             scrollable="true"
+                             liveScroll="true"
+                             style="width: 640px"
+                             filteredValue="#{memberBean.filteredApplicantList}"
+                             selectionMode="single"
+                             scrollHeight="150">
+					<p:ajax async="true"
+							event="rowSelect"
+							update=":validApplicantForm"/>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="OuCode"/>
+						</f:facet>
+						<h:outputText value="#{item.ouCode.ouCode}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="LastName"/>
+						</f:facet>
+						<h:outputText value="#{item.lastName}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="FirstName"/>
+						</f:facet>
+						<h:outputText value="#{item.firstName}"/>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="MiddleName"/>
+						</f:facet>
+						<h:outputText value="#{item.middleName}"/>
+					</p:column>
+				</p:dataTable>
+				<br/>
+				<p:panel id="applInfoPanel" header="Applicant Information" style="margin-bottom: 20px">
+					<p:panelGrid columns="2">
+						<h:outputText value="ApplicationDate:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.applicationDate}" title="ApplicationDate">
+							<f:convertDateTime pattern="MM/dd/yyyy" />
+						</h:outputText>
+						<h:outputText value="LastName:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.lastName}" title="LastName"/>
+						<h:outputText value="FirstName:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.firstName}" title="FirstName"/>
+						<h:outputText value="MiddleName:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.middleName}" title="MiddleName"/>
+						<h:outputText value="Gender:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.gender}" title="Gender"/>
+						<h:outputText value="Birthdate:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.birthdate}" title="Birthdate">
+							<f:convertDateTime pattern="MM/dd/yyyy" />
+						</h:outputText>
+						<h:outputText value="Street:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.street}" title="Street"/>
+						<h:outputText value="Barangay:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.barangay}" title="Barangay"/>
+						<h:outputText value="CityMun:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.cityMun}" title="CityMun"/>
+						<h:outputText value="ContactNumber:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.contactNumber}" title="ContactNumber"/>
+						<h:outputText value="Nationality:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.nationality}" title="Nationality"/>
+						<h:outputText value="Occupation:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.occupation}" title="Occupation"/>
+						<h:outputText value="ResidentSince:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.residentSince}" title="ResidentSince">
+							<f:convertDateTime pattern="MM/dd/yyyy" />
+						</h:outputText>
+						<h:outputText value="CivilStatus:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.civilStatus}" title="CivilStatus"/>
+						<h:outputText value="Education:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.education}" title="Education"/>
+						<h:outputText value="OuCode:"/>
+						<h:outputText value="#{memberBean.selectedApplicant.ouCode.ouCode}" title="OuCode"/>
+					</p:panelGrid>
+				</p:panel>
+				<p:button id="validateApplicant"
+						  value="Add as Member"
+						  outcome="addMember?faces-redirect=true"/>
+				<p:commandButton
+			</h:form>
+		</f:view>
+    </ui:define>
+</ui:composition>
