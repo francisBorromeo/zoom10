@@ -7,24 +7,28 @@ package coop.sandionisiocredit.zoom10.bean;
 
 import coop.sandionisiocredit.zoom10.model.*;
 import coop.sandionisiocredit.zoom10.service.*;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import org.primefaces.event.FlowEvent;
 
 /**
  *
  * @author mis
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class MemberBean {
 
 	//EJBs
-
 	@EJB
 	private CoopAddlAddressFacade addlAddressFacade;
 	@EJB
@@ -59,9 +63,9 @@ public class MemberBean {
 	private CoopApplicant applicant;
 	private CoopAwards awards;
 	private CoopBizInfo bizInfo;
-	private CoopEducInfo educInfo;
+	private CoopEducInfo[] educInfos;
 	private CoopEmplDtl employmentDetail;
-	private CoopKin relative;
+	private CoopKin[] relatives;
 	private CoopKinship relationship;
 	private CoopMemSkill memberSkill;
 	private CoopMember member;
@@ -81,7 +85,8 @@ public class MemberBean {
 	private List<CoopOrgUnit> ouList;
 	private List<CoopOrgUnit> filteredOuList;
 	private DataModel<CoopOrgUnit> ouModel;
-
+	private int numberOfRelatives;
+	
 	public MemberBean() {
 	}
 
@@ -103,7 +108,30 @@ public class MemberBean {
 		 orgUnit = new CoopOrgUnit();
 		 skill = new CoopSkill();
 		 */
+		relatives = new CoopKin[numberOfRelatives];
+		educInfos = new CoopEducInfo[3];
 		applicantList = applicantFacade.findAll();
+		ouList = ouFacade.findAll();
+		memberList = memberFacade.findAll();
+	}
+
+	public void clearBean() {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("memberBean", null);
+		System.out.println("");
+		//FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	}
+
+	public String onFlowProcess(FlowEvent event) {
+		return event.getNewStep();
+	}
+	
+	public void persistMem() {
+		
+	}
+
+	//save validated applicant
+	public String createMem() {
+		return "validateApplicant";
 	}
 
 	//getters start
@@ -142,11 +170,8 @@ public class MemberBean {
 		return bizInfo;
 	}
 
-	public CoopEducInfo getEducInfo() {
-		if (educInfo == null) {
-			educInfo = new CoopEducInfo();
-		}
-		return educInfo;
+	public CoopEducInfo[] getEducInfos() {
+		return educInfos;
 	}
 
 	public CoopEmplDtl getEmploymentDetail() {
@@ -156,11 +181,8 @@ public class MemberBean {
 		return employmentDetail;
 	}
 
-	public CoopKin getRelative() {
-		if (relative == null) {
-			relative = new CoopKin();
-		}
-		return relative;
+	public CoopKin[] getRelatives() {
+		return relatives;
 	}
 
 	public CoopKinship getRelationship() {
@@ -241,16 +263,16 @@ public class MemberBean {
 		this.bizInfo = bizInfo;
 	}
 
-	public void setEducInfo(CoopEducInfo educInfo) {
-		this.educInfo = educInfo;
+	public void setEducInfos(CoopEducInfo[] educInfos) {
+		this.educInfos = educInfos;
 	}
 
 	public void setEmploymentDetail(CoopEmplDtl employmentDetail) {
 		this.employmentDetail = employmentDetail;
 	}
 
-	public void setRelative(CoopKin relative) {
-		this.relative = relative;
+	public void setRelatives(CoopKin[] relatives) {
+		this.relatives = relatives;
 	}
 
 	public void setRelationship(CoopKinship relationship) {

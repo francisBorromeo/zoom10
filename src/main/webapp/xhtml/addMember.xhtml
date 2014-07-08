@@ -7,15 +7,16 @@
 				xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="top">
-        <h1><h:outputText value="Create/Edit"/></h1>
+        <h1>
+			Create/Edit
+		</h1>
     </ui:define>
 
     <ui:define name="content">
 		<f:view>
-			<h:form id="addMemberForm" style="font-size: 10px">
+			<h:form id="addMemberForm">
 				<f:event type="preRenderView" listener="#{memberBean.init}"/>
-				<p:growl id="growl" sticky="true" showDetail="true"/>
-				<p:wizard flowListener="#{memberBean.onFlowProcess}">
+				<p:wizard flowListener="#{memberBean.onFlowProcess}" backLabel="Go back">
 					<p:tab id="personal" title="Personal" titleStyle="font-size: 12px">
 						<p:panel header="Personal Details">
 							<p:messages />
@@ -35,15 +36,15 @@
 								<h:outputText value="Nickname: " />
 								<p:inputText value="#{memberBean.member.nickname}"
 											 label="Nickame"
-											 size="15"/>
+											 maxlength="15"/>
 								<h:outputText value="Height: " />
 								<p:inputText value="#{memberBean.member.height}"
 											 label="Height"
-											 size="3"/>
+											 maxlength="3"/>
 								<h:outputText value="Weight: " />
 								<p:inputText value="#{memberBean.member.weight}"
 											 label="Weight"
-											 size="3"/>
+											 maxlength="3"/>
 								<h:outputText value="Birthdate: " />
 								<p:calendar value="#{memberBean.selectedApplicant.birthdate}"
 											pattern="MM/dd/yyyy"
@@ -51,75 +52,164 @@
 								<h:outputText value="Birthplace: " />
 								<p:inputText value="#{memberBean.member.birthplace}"
 											 label="Birthplace"
-											 size="20"/>
+											 maxlength="20"/>
 								<h:outputText value="Religion: " />
 								<p:inputText value="#{memberBean.member.religion}"
 											 label="Religion"
-											 size="14"/>
+											 maxlength="14"/>
 								<h:outputText value="Gender: " />
-								<p:inputText value="#{memberBean.member.gender}"
+								<p:inputText value="#{memberBean.selectedApplicant.gender}"
 											 label ="Gender"
-											 size="1"/>
+											 maxlength="1"/>
 								<h:outputText value="Civil Status: " />
-								<p:inputText value="#{memberBean.member.civilStatus}"
+								<p:inputText value="#{memberBean.selectedApplicant.civilStatus}"
 											 label ="Civil Status"
-											 size="1"/>
+											 maxlength="1"/>
 								<h:outputText value="Nationality: " />
-								<p:inputText value="#{memberBean.member.nationality}"
+								<p:inputText value="#{memberBean.applicant.applicationDate}"
 											 label ="Nationality"
-											 size="8"/>
-								<h:outputText value="Skip to last: " />
-								<h:selectBooleanCheckbox value="#{memberBean.skip}" />
+											 maxlength="8"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
 
-					<p:tab id="address" title="Address" titleStyle="font-size: 12px">
-						<p:panel header="Address Details">
+					<p:tab id="contactDet" title="Contact Details" titleStyle="font-size: 12px">
+						<p:panel header="Contact Details">
 							<p:messages />
 							<h:panelGrid columns="2" columnClasses="label, value">
 								<h:outputText value="Street Name: " />
-								<p:inputText value="#{memberBean.member.street}"
-											 size="60"/>
+								<p:inputText value="#{memberBean.selectedApplicant.street}"
+											 maxlength="60"/>
 								<h:outputText value="Barangay: " />
-								<p:inputText value="#{memberBean.member.barangay}"
-											 size="50"/>
+								<p:inputText value="#{memberBean.selectedApplicant.barangay}"
+											 maxlength="50"/>
 								<h:outputText value="City/Municipality: " />
-								<p:inputText value="#{memberBean.member.cityMun}"
-											 size="50"/>
+								<p:inputText value="#{memberBean.selectedApplicant.cityMun}"
+											 maxlength="50"/>
 								<h:outputText value="Province: " />
 								<p:inputText value="#{memberBean.member.province}"
-											 size="50"/>
+											 maxlength="50"/>
 								<h:outputText value="Region: " />
 								<p:inputText value="#{memberBean.member.region}"
-											 size="50"/>
+											 maxlength="50"/>
 								<h:outputText value="Postal Code: " />
 								<p:inputText value="#{memberBean.member.zipCode}"
-											 size="4"/>
+											 maxlength="4"/>
 								<h:outputText value="Residence Type: " />
 								<p:inputText value="#{memberBean.member.residenceType}"
-											 size="1"/>
+											 maxlength="1"/>
 								<h:outputText value="Contact Number: " />
-								<p:inputText value="#{memberBean.member.contactNumber}"
-											 size="12"/>
-								<h:outputText value="Skip to last: " />
-								<h:selectBooleanCheckbox value="#{memberBean.skip}" />
+								<p:inputText value="#{memberBean.selectedApplicant.contactNumber}"
+											 maxlength="12"/>							
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
 
 					<p:tab id="employment" title="Employment" titleStyle="font-size: 12px">
-						<p:panel header="Employmentl Information">
+						<p:panel header="Employment Information">
 							<p:messages />
 							<h:panelGrid columns="2" columnClasses="label, value">
 								<h:outputText value="Employer Name: " />
-								<p:inputText value="#{memberBean.member.lastName}" />
+								<p:inputText value="#{memberBean.employmentDetail.emplrBizName}" />
 
 								<h:outputText value="Employment Status: " />
-								<p:inputText value="#{memberBean.member.lastName}"/>
+								<p:inputText value="#{memberBean.employmentDetail.employmentStat}"/>
 
 								<h:outputText value="Compensation Range: " />
-								<p:inputText value="#{memberBean.member.lastName}"/>
+								<p:inputText value="#{memberBean.employmentDetail.compBracket}"/>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="education" title="Education" titleStyle="font-size: 12px">
+						<p:panel header="Educational Background">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="Elementary Education"/>
+								
+								<h:outputText value="School Name: " />
+								<p:inputText value="#{memberBean.educInfo.schoolName[0]}" />
+
+								<h:outputText value="Last school year: " />
+								<p:selectOneMenu value="#{memberBean.educInfo.yearLastAttended[0]}"
+
+								<p:separator/>
+								
+								<h:outputText value="Highschool Education"/>
+								
+								<h:outputText value="School Name: " />
+								<p:inputText value="#{memberBean.educInfo.schoolName[1]}" />
+
+								<h:outputText value="Last school year: " />
+								<p:selectOneMenu value="#{memberBean.educInfo.yearLastAttended[1]}"
+
+								<p:separator/>
+								
+								<h:outputText value="College Education"/>
+								
+								<h:outputText value="School Name: " />
+								<p:inputText value="#{memberBean.educInfo.schoolName[2]}" />
+
+								<h:outputText value="Last school year: " />
+								<p:selectOneMenu value="#{memberBean.educInfo.yearLastAttended[2]}"
+
+								<p:separator/>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+					
+					<p:tab id="familyInfoTab" title="Family Information" titleStyle="font-size: 12px">
+						<p:panel header="Family Information">
+							<p:messages />
+							<h:panelGrid columns="2" columnClasses="label, value">
+								<h:outputText value="First Name: *" />
+								<p:inputText value="#{memberBean.selectedApplicant.firstName}"
+											 required="true" label="First Name"
+											 size ="20"/>
+								<h:outputText value="Last Name: *" />
+								<p:inputText value="#{memberBean.selectedApplicant.lastName}"
+											 required="true" label="Last Name"
+											 size ="25"/>
+								<h:outputText value="Middle Name: " />
+								<p:inputText value="#{memberBean.selectedApplicant.middleName}"
+											 label="Middle Name"
+											 size ="20"/>
+								<h:outputText value="Nickname: " />
+								<p:inputText value="#{memberBean.member.nickname}"
+											 label="Nickame"
+											 maxlength="15"/>
+								<h:outputText value="Height: " />
+								<p:inputText value="#{memberBean.member.height}"
+											 label="Height"
+											 maxlength="3"/>
+								<h:outputText value="Weight: " />
+								<p:inputText value="#{memberBean.member.weight}"
+											 label="Weight"
+											 maxlength="3"/>
+								<h:outputText value="Birthdate: " />
+								<p:calendar value="#{memberBean.selectedApplicant.birthdate}"
+											pattern="MM/dd/yyyy"
+											label ="Birthdate"/>
+								<h:outputText value="Birthplace: " />
+								<p:inputText value="#{memberBean.member.birthplace}"
+											 label="Birthplace"
+											 maxlength="20"/>
+								<h:outputText value="Religion: " />
+								<p:inputText value="#{memberBean.member.religion}"
+											 label="Religion"
+											 maxlength="14"/>
+								<h:outputText value="Gender: " />
+								<p:inputText value="#{memberBean.selectedApplicant.gender}"
+											 label ="Gender"
+											 maxlength="1"/>
+								<h:outputText value="Civil Status: " />
+								<p:inputText value="#{memberBean.selectedApplicant.civilStatus}"
+											 label ="Civil Status"
+											 maxlength="1"/>
+								<h:outputText value="Nationality: " />
+								<p:inputText value="#{memberBean.applicant.applicationDate}"
+											 label ="Nationality"
+											 maxlength="8"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -129,13 +219,13 @@
 							<h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
 								<h:panelGrid columns="2" columnClasses="label, value">
 									<h:outputText value="First Name: " />
-									<h:outputText value="#{memberBean.member.firstName}" styleClass="outputLabel"/>
+									<h:outputText value="#{memberBean.selectedApplicant.firstName}" styleClass="outputLabel"/>
 
 									<h:outputText value="Last Name: " />
-									<h:outputText value="#{memberBean.member.lastName}" styleClass="outputLabel"/>
+									<h:outputText value="#{memberBean.selectedApplicant.lastName}" styleClass="outputLabel"/>
 
 									<h:outputText value="Middle Name: " />
-									<h:outputText value="#{memberBean.member.middleName}" styleClass="outputLabel"/>
+									<h:outputText value="#{memberBean.selectedApplicant.middleName}" styleClass="outputLabel"/>
 								</h:panelGrid>
 
 								<h:panelGrid columns="2" columnClasses="label, value">
@@ -151,7 +241,9 @@
 
 								<h:panelGrid columns="2" columnClasses="label, value">
 									<h:outputText value="Birthdate: " />
-									<h:outputText value="#{memberBean.member.birthdate}" styleClass="outputLabel"/>
+									<h:outputText value="#{memberBean.selectedApplicant.birthdate}" styleClass="outputLabel">
+										<f:convertDateTime pattern="MMM dd, yyyy"/>
+									</h:outputText>
 
 									<h:outputText value="Birhtplace " />
 									<h:outputText value="#{memberBean.member.birthplace}" styleClass="outputLabel"/>
@@ -164,7 +256,7 @@
 								</h:panelGrid>
 							</h:panelGrid>
 
-							<p:commandButton value="Submit" actionListener="#{memberBean.addSave}" update="growl" process="@this"/>
+							<p:commandButton value="Submit" action="#{memberBean.createMem}" ajax="false"/>
 						</p:panel>
 					</p:tab>
 				</p:wizard>

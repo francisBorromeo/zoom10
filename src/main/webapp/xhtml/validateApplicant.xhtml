@@ -4,8 +4,7 @@
                 template="./../resources/templates/memberlayout.xhtml"
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core"
-				xmlns:p="http://primefaces.org/ui"
-				xmlns:aui="http://liferay.com/faces/aui">
+				xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="top">
         <h1>
@@ -33,7 +32,8 @@
 					<p:ajax async="true"
 							event="rowSelect"
 							update=":validApplicantForm"/>
-					<p:column>
+					<p:column filterBy="#{item.ouCode.ouCode}"
+							  filterMatchMode="exact">
 						<f:facet name="header">
 							<h:outputText value="OuCode"/>
 						</f:facet>
@@ -103,8 +103,7 @@
 				</p:panel>
 				<p:button id="validateApplicant"
 						  value="Add as Member"
-						  outcome="addMember?faces-redirect=true"/>
-				<p:commandButton
+						  outcome="addMember"/>
 			</h:form>
 		</f:view>
     </ui:define>
