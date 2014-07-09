@@ -1,4 +1,3 @@
- - unresolved fields
 zoom10
 ======
 
